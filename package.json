@@ -1,0 +1,22 @@
+{
+  "name": "discord-forums",
+  "version": "1.0.0",
+  "description": "discord-forums is a lightweight, powerfull npm package that lets you make a forums channel for your server where members can discuss questions and ideas.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Abdelrahman-Mohammad/discord-forums.git"
+  },
+  "author": "Abdelrahman Mohammad",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Abdelrahman-Mohammad/discord-forums/issues"
+  },
+  "homepage": "https://github.com/Abdelrahman-Mohammad/discord-forums#readme",
+  "dependencies": {
+    "discord.js": "^13.8.1"
+  }
+}
