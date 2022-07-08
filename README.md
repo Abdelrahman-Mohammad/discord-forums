@@ -4,7 +4,7 @@
 
 # discord-forums
 
-<!-- ![discord-forums picture](https://i.ibb.co/DbV86bj/discord-forums.jpg) -->
+![discord-forums picture](https://i.ibb.co/DbV86bj/discord-forums.jpg)\
 
 - discord-forums is a lightweight, powerfull npm package that lets you make a forums channel for your server where members can discuss questions and ideas.
 - If you need help feel free to join our <a href="https://discord.gg/hnzXhDh">discord server</a> to talk and help you with your code.
