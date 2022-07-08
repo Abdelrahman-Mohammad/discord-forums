@@ -1,6 +1,6 @@
 {
   "name": "discord-forums",
-  "version": "1.0.0",
+  "version": "1.0.2-0",
   "description": "discord-forums is a lightweight, powerfull npm package that lets you make a forums channel for your server where members can discuss questions and ideas.",
   "main": "index.js",
   "scripts": {
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Abdelrahman-Mohammad/discord-forums#readme",
   "dependencies": {
-    "discord.js": "^13.8.1"
+    "discord.js": "^13.8.1",
+    "mongoose": "^6.4.3"
   }
 }
