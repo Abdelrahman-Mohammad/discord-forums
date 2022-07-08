@@ -6,6 +6,10 @@
 
 ![discord-forums picture](https://i.ibb.co/DbV86bj/discord-forums.jpg)
 
+# Documentation
+
+You can find the full documentation [here]().
+
 # Download
 
 You can download it from npm:
@@ -30,11 +34,10 @@ Forums.connectionURL("mongodb://...");
 
 # Examples
 
-Check [properties](https://github.com/Abdelrahman-Mohammad/discord-forums/test/#proterties) for all the properties of your forum.
+Check [properties](https://github.com/Abdelrahman-Mohammad/discord-forums/tree/main/test#properties) for all the properties of your forum.
+_Note: in the examples we will be using a [command handler](https://discordjs.guide/creating-your-bot/command-handling.html)._
 
 ## Making a forum command
-
-_Note: in the examples we will be using a [command handler](https://discordjs.guide/creating-your-bot/command-handling.html)._
 
 - Dependencies you need:
   - discord-forums
@@ -83,8 +86,6 @@ Congrats 🥳! You made your first forum.
 
 ## Making a forum deletion command
 
-_Note: in the examples we will be using a [command handler](https://discordjs.guide/creating-your-bot/command-handling.html)._
-
 - Dependencies you need:
   - discord-forums
   - discord.js
@@ -130,25 +131,28 @@ module.exports = {
 };
 ```
 
-# Documentation
-
-You can find the full documentation [here]().
-
 ## Properties
 
 ```js
 const myForum = Forums.deleteForum(...);
 
-myForum.userID // The ID of the user that owns this forum - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
-myForum.messageID // The message ID that the thread(forum) is linked to - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
-myForum.threadID // The thread ID that the forum is in - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
-myForum.channelID // The channel ID that the forum is in - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
-myForum.guildID // The guild ID that the forum is in - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
+myForum.userID // The ID of the user that owns this forum - Snowflake
+myForum.messageID // The message ID that the thread(forum) is linked to - Snowflake
+myForum.threadID // The thread ID that the forum is in - Snowflake
+myForum.channelID // The channel ID that the forum is in - Snowflake
+myForum.guildID // The guild ID that the forum is in - Snowflake
 myForum.Title // The user specified title of the forum - String
 myForum.Description // The user specified description of the forum - String
 myForum.MessagesNumber // The number of messages in the forum - Number
-myForum.forumUsers // All the users in the forum - Array<[Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)>
-myForum.forumMessages // All the messages in the forum - Array<[Message](https://discord.js.org/#/docs/discord.js/stable/class/Message)>
+myForum.forumUsers // All the users in the forum - Array<Snowflake>
+myForum.forumMessages // All the messages in the forum - Array<Message>
 ```
+
+### Types
+
+[Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
+[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)
+[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
+[Message](https://discord.js.org/#/docs/discord.js/stable/class/Message)
 
 Have fun and happy discussions! Made with ❤ by Abdelrahman.

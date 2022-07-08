@@ -55,7 +55,7 @@ Forums.connectionURL("mongodb://...");
 
 # Examples
 
-_Examples can be found in /test_
+_Examples can be found in [/test](https://github.com/Abdelrahman-Mohammad/discord-forums/tree/main/test#discord-forums)_
 
 # Methods
 
