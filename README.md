@@ -4,6 +4,8 @@
 
 # discord-forums
 
+![discord-forums picture](https://i.ibb.co/DbV86bj/discord-forums.jpg)
+
 - discord-forums is a lightweight, powerfull npm package that lets you make a forums channel for your server where members can discuss questions and ideas.
 - If you need help feel free to join our <a href="https://discord.gg/hnzXhDh">discord server</a> to talk and help you with your code.
 - If you encounter any of issues fell free to open an issue in our <a href="https://github.com/Abdelrahman-Mohammad/discord-forums/issues">github repository</a>.
@@ -28,12 +30,15 @@ npm update discord-forums
 
 # Changelog
 
-- **10 July 2022** (v1.0.0) - Grand Launch.
+- **8 July 2022** (v1.2.0) - Added **createForum** and **deleteForum** methods.
+- **8 July 2022** (v1.1.0) - Grand Launch.
 
 # Quick Example
 
 ```js
 const Forums = require("discord-forums");
+Forums.connectionURL("mongodb://..."); // First, we connect to the database.
+const myForum = Forums.createForum(client, interaction, "Issues Forum", "Issue Title", "Issue Description"); // Then, we create our forum.
 ```
 
 # Setting Up
@@ -44,18 +49,24 @@ First things first, we include the module into the project.
 const Forums = require("discord-forums");
 ```
 
+Then, we connect to our MongoDB database.
+
+```js
+Forums.connectionURL("mongodb://...");
+```
+
 # Examples
 
 _Examples can be found in /test_
 
 # Methods
 
-**Method Name**
+### **createForum**
 
-Description
+Create a new forum.
 
 ```js
-Code;
+Forums.createForum(<Client - Discord.Client>, <Interaction - Discord.Interaction>, <ForumHeader - String | "New Forum">, <ForumTitleLabel - String | "Title">, <ForumDescriptionLabel - String | "Description">);
 ```
 
 - Output:
@@ -64,13 +75,54 @@ Code;
 Promise<Object>
 ```
 
-# How it works
+#### **createForum properties**
 
-## Method Name
+```js
+const myForum = Forums.createForum(...);
 
-1. First
-2. Then
-3. After that
-4. Lastly
+myForum.userID // The ID of the user that owns this forum - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
+myForum.messageID // The message ID that the thread(forum) is linked to - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
+myForum.threadID // The thread ID that the forum is in - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
+myForum.channelID // The channel ID that the forum is in - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
+myForum.guildID // The guild ID that the forum is in - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
+myForum.Title // The user specified title of the forum - String
+myForum.Description // The user specified description of the forum - String
+myForum.MessagesNumber // The number of messages in the forum - Number
+myForum.forumUsers // All the users in the forum - Array<[Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)>
+myForum.forumMessages // All the messages in the forum - Array<[Message](https://discord.js.org/#/docs/discord.js/stable/class/Message)>
+```
+
+### **deleteForum**
+
+delets a forum, if it exists.
+
+```js
+Forums.deleteForum(<Client - Discord.Client>, <UserID - String>, <ThreadID - String>);
+```
+
+_note: You can only provide one of UserID or ThreadID and it would still work._
+
+- Output:
+
+```
+Promise<Object>
+```
+
+#### **deleteForum properties**
+
+```js
+const myForum = Forums.deleteForum(...);
+
+myForum.userID // The ID of the user that owns this forum - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
+myForum.messageID // The message ID that the thread(forum) is linked to - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
+myForum.threadID // The thread ID that the forum is in - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
+myForum.channelID // The channel ID that the forum is in - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
+myForum.guildID // The guild ID that the forum is in - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
+myForum.Title // The user specified title of the forum - String
+myForum.Description // The user specified description of the forum - String
+myForum.MessagesNumber // The number of messages in the forum - Number
+myForum.forumUsers // All the users in the forum - Array<[Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)>
+myForum.forumMessages // All the messages in the forum - Array<[Message](https://discord.js.org/#/docs/discord.js/stable/class/Message)>
+```
 
 Have fun and happy discussions! Made with ❤ by Abdelrahman.
