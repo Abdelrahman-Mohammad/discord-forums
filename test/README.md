@@ -65,14 +65,20 @@ module.exports = {
     // We pass in our client as the first parameter and interaction as our seccond.
     // We will also put it in a variable to use it later.
     const myForum = await Forums.createForum(client, interaction);
+    console.log(myForum);
+
+    // Then, we make sure that the user doesn't have a forum already open
+    if (myForum === false) {
+      return interaction.reply("You already have a forum open");
+    }
 
     // Here we will be sending a log message to the moderation channel
-    const moderationChannel = client.channels.cache.get("753938142246994033");
+    const moderationChannel = await client.channels.cache.get("862503484418687028");
 
     // Next, let's create an embed with all the Forums information to send
     const embed = new Discord.MessageEmbed()
       .setColor("GREEN")
-      .setAuthor({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() })
+      .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() })
       .setTitle("New Forum Created")
       .setDescription(`\`A new forum has been created.\`\n\n> Creator: ${interaction.member}\n> Forum ID: ${myForum.threadID}\n> Forum Title: ${myForum.Title}\n> Forum Description: ${myForum.Description}`);
 
@@ -113,7 +119,12 @@ module.exports = {
     // After that we call the .deleteForum() method to delete our forum.
     // We pass in our client as the first parameter and either user id or thread id as our seccond, I chose user id for this one.
     // We will also put it in a variable to use it later.
-    const myDeltedForum = await Forums.deleteForum(client, userId);
+    const myDeletedForum = await Forums.deleteForum(client, userId);
+
+    // Then, we make sure that the forum exist
+    if (myDeletedForum === false) {
+      return interaction.reply("I couldn't find any forums");
+    }
 
     // Here we will be sending a log message to the moderation channel
     const moderationChannel = client.channels.cache.get("753938142246994033");
@@ -121,9 +132,9 @@ module.exports = {
     // Next, let's create an embed with all the Forums information to send
     const embed = new Discord.MessageEmbed()
       .setColor("RED")
-      .setAuthor({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() })
+      .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() })
       .setTitle("A Forum Was Deleted")
-      .setDescription(`\`A forum has been deleted.\`\n\n> Creator: ${interaction.member}\n> Forum ID: ${myForum.threadID}\n> Forum Title: ${myForum.Title}\n> Forum Description: ${myForum.Description}`);
+      .setDescription(`\`A forum has been deleted.\`\n\n> Creator: ${interaction.member}\n> Forum ID: ${myDeletedForum.threadID}\n> Forum Title: ${myDeletedForum.Title}\n> Forum Description: ${myDeletedForum.Description}`);
 
     // Lastly, we send the embed to the moderation channel.
     await moderationChannel.send({ embeds: [embed] });
@@ -150,9 +161,9 @@ myForum.forumMessages // All the messages in the forum - Array<Message>
 
 ### Types
 
-[Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
-[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)
-[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
-[Message](https://discord.js.org/#/docs/discord.js/stable/class/Message)
+- [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
+- [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)
+- [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
+- [Message](https://discord.js.org/#/docs/discord.js/stable/class/Message)
 
 Have fun and happy discussions! Made with ❤ by Abdelrahman.

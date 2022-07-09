@@ -31,7 +31,7 @@ class DiscordForums {
     if (modalTitleLabel.length > 100) return new TypeError("A modal's title label can't exceed 100 characters.");
     if (modalDescriptionLabel.length > 100) return new TypeError("A modal's description label can't exceed 100 characters.");
 
-    const isForum = forums.findOne({ userID: interaction.user.id });
+    const isForum = await forums.findOne({ userID: interaction.user.id });
     if (isForum) return false;
 
     const forumModal = new Discord.Modal().setCustomId("forum").setTitle(modalHeader);
@@ -42,49 +42,53 @@ class DiscordForums {
     forumModal.addComponents(firstActionRow, secondActionRow);
     await interaction.showModal(forumModal);
 
-    client.on("interactionCreate", async (interaction) => {
-      const title = interaction.fields.getTextInputValue("forum-title");
-      const description = interaction.fields.getTextInputValue("forum-description");
+    const filter = (interaction) => interaction.customId === "forum";
+    const modalInteraction = await interaction.awaitModalSubmit({ filter, time: 360000000 });
+    const title = await modalInteraction.fields.getTextInputValue("forum-title");
+    const description = await modalInteraction.fields.getTextInputValue("forum-description");
 
-      const forumEmbed = new Discord.MessageEmbed().setColor("#2F3136").setAuthor({ name: title, iconURL: interaction.user.displayAvatarURL() }).setDescription(`**${interaction.user.username}:** ${description}\n\n-----------------------------------------------------------------------------------------------`).setFooter({ text: "0", iconURL: "https://i.ibb.co/fqMkfNJ/afafafafafafaf.jpg" }).setTimestamp();
-      const message = await interaction.reply({ embeds: [forumEmbed], fetchReply: true });
-      const thread = await message.startThread({ name: title });
+    const forumEmbed = new Discord.MessageEmbed().setColor("#2F3136").setAuthor({ name: title, iconURL: interaction.user.displayAvatarURL() }).setDescription(`**${interaction.user.username}:** ${description}\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬`).setFooter({ text: "0", iconURL: "https://i.ibb.co/fqMkfNJ/afafafafafafaf.jpg" }).setTimestamp();
+    const message = await interaction.followUp({ embeds: [forumEmbed], fetchReply: true });
+    const thread = await message.startThread({ name: title });
 
-      const Forum = new forums({
-        userID: interaction.user.id,
-        messageID: message.id,
-        channelID: interaction.channel.id,
-        threadID: thread.id,
-        guildID: interaction.guild.id,
-        Title: title,
-        Description: description,
-        MessagesNumber: thread.messageCount,
-        forumUsers: thread.members.cache.map((member) => member.id),
-        forumMessages: thread.messages.cache.map((message) => message),
-      }).catch((e) => console.log(`Failed to create document: ${e}`));
-      await Forum.save().catch((e) => console.log(`Failed to save forum to database: ${e}`));
+    const Forum = new forums({
+      userID: interaction.user.id,
+      messageID: message.id,
+      channelID: interaction.channel.id,
+      threadID: thread.id,
+      guildID: interaction.guild.id,
+      Title: title,
+      Description: description,
+      MessagesNumber: thread.messageCount,
+      forumUsers: thread.members.cache.map((member) => member.id),
+      forumMessages: thread.messages.cache.map((message) => message),
+    });
+    await Forum.save().catch((e) => console.log(`Failed to save forum to database: ${e}`));
 
-      let messageNumber = 0;
-      client.on("messageCreate", async (messageCreated) => {
-        if (messageCreated.author.bot) return;
-        if (messageCreated.channel.parent.id !== thread.parent.id) return;
-        const doc = await forums
-          .findOne({
+    let messageNumber = 0;
+    client.on("messageCreate", async (messageCreated) => {
+      if (messageCreated.author.bot) return;
+      if (messageCreated.channel.parent.id !== thread.parent.id) return;
+      messageNumber++;
+      await forums
+        .findOneAndUpdate(
+          {
             userID: interaction.user.id,
             messageID: message.id,
             channelID: interaction.channel.id,
             threadID: thread.id,
             guildID: interaction.guild.id,
-          })
-          .catch((e) => console.log(`Failed to find document: ${e}`));
-        if (doc.MessagesNumber >= 50) return;
+          },
+          {
+            MessagesNumber: messageNumber,
+          }
+        )
+        .catch((e) => console.log(`Failed to find document: ${e}`));
 
-        messageNumber++;
-        const embed = forumEmbed.setFooter({ text: messageNumber.toString(), iconURL: "https://i.ibb.co/fqMkfNJ/afafafafafafaf.jpg" });
-        await message.edit({ embeds: [embed] }).then((e) => doc.MessagesNumber++);
-      });
-      return Forum;
+      const embed = forumEmbed.setFooter({ text: messageNumber.toString(), iconURL: "https://i.ibb.co/fqMkfNJ/afafafafafafaf.jpg" });
+      await message.edit({ embeds: [embed] });
     });
+    return Forum;
   }
 
   /**
