@@ -12,7 +12,7 @@
 - If you need help feel free to join our <a href="https://discord.gg/hnzXhDh">discord server</a> to talk and help you with your code.
 - If you encounter any of issues fell free to open an issue in our <a href="https://github.com/Abdelrahman-Mohammad/discord-forums/issues">github repository</a>.
 
-# Download & Update
+# 📁 | Download & Update
 
 You can download it from npm:
 
@@ -26,12 +26,12 @@ You can update to a newer version to receive updates using npm.
 npm update discord-forums
 ```
 
-# Changelog
+# ⚙ | Changelog
 
 - **8 July 2022** (v1.2.0) - Added **createForum** and **deleteForum** methods.
 - **8 July 2022** (v1.1.0) - Grand Launch.
 
-# Quick Example
+# ✍ | Quick Example
 
 ```js
 const Forums = require("discord-forums");
@@ -39,7 +39,7 @@ Forums.connectionURL("mongodb://..."); // First, we connect to the database.
 const myForum = Forums.createForum(client, interaction, "Issues Forum", "Issue Title", "Issue Description"); // Then, we create our forum.
 ```
 
-# Setting Up
+# 📜 | Setting Up
 
 First things first, we include the module into the project.
 
@@ -53,7 +53,7 @@ Then, we connect to our MongoDB database.
 Forums.connectionURL("mongodb://...");
 ```
 
-# Examples
+# 📝 | Examples
 
 _Examples can be found in [/test](https://github.com/Abdelrahman-Mohammad/discord-forums/tree/main/test#discord-forums)_
 
