@@ -106,7 +106,7 @@ const Forums = require("discord-forums");
 const mongoose = require("mongoose");
 
 module.exports = {
-  data: new SlashCommandBuilder().setName("forum").setDescription("Creates a new forum"),
+  data: new SlashCommandBuilder().setName("deleteforum").setDescription("Deletes a forum"),
   async execute(interaction) {
     // We define our client and our other variables.
     const client = interaction.client;
@@ -138,6 +138,54 @@ module.exports = {
 
     // Lastly, we send the embed to the moderation channel.
     await moderationChannel.send({ embeds: [embed] });
+  },
+};
+```
+
+## Making a get forum command
+
+- Dependencies you need:
+  - discord-forums
+  - discord.js
+  - @discordjs/builders
+  - mongoose
+
+```js
+// First, we require our dependencies.
+const Discord = require("discord.js");
+const { SlashCommandBuilder } = require("@discordjs/builders");
+const Forums = require("discord-forums");
+const mongoose = require("mongoose");
+
+module.exports = {
+  data: new SlashCommandBuilder().setName("getforum").setDescription("gets a forum"),
+  async execute(interaction) {
+    // We define our client and variables.
+    const client = interaction.client;
+    const userId = interaction.user.id;
+    const threadId = "994922705449136139";
+
+    // Then, we connect to our database.
+    await Forums.connectionURL("mongodb://...");
+
+    // After that we call the .getForum() method to get our forum.
+    // We pass in our userId as the first parameter and thread id as our seccond, either userId or threadId will work.
+    // We will also put it in a variable to use it later.
+    const myForum = await Forums.getForum(userId, threadId);
+
+    // Then, we make sure that the forum exist
+    if (myForum === false) {
+      return interaction.reply("I couldn't find any forums");
+    }
+
+    // To reply with the forum, we first make an embed with the forum's information
+    const embed = new Discord.MessageEmbed()
+      .setColor("GREEN")
+      .setTitle(`${myForum.Title}`)
+      .setDescription(`> Creator: <@${myForum.userID}>\n> Forum Message ID: ${myForum.messageID}\n> Forum Thread ID: ${myForum.threadID}\n> Forum Channel: <#${myForum.channelID}>\n> Forum Guild ID: ${myForum.guildID}\n> Forum Title: ${myForum.Title}\n> Forum Description: ${myForum.Description}\n> Forum Message Number: ${myForum.MessagesNumber}`);
+
+    // Then we send the embed
+    await interaction.reply({ embeds: [embed] });
   },
 };
 ```

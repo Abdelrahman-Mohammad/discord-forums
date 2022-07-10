@@ -78,16 +78,16 @@ Promise<Object>
 ```js
 const myForum = Forums.createForum(...);
 
-myForum.userID // The ID of the user that owns this forum - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
-myForum.messageID // The message ID that the thread(forum) is linked to - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
-myForum.threadID // The thread ID that the forum is in - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
-myForum.channelID // The channel ID that the forum is in - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
-myForum.guildID // The guild ID that the forum is in - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
+myForum.userID // The ID of the user that owns this forum - Snowflake
+myForum.messageID // The message ID that the thread(forum) is linked to - Snowflake
+myForum.threadID // The thread ID that the forum is in - Snowflake
+myForum.channelID // The channel ID that the forum is in - Snowflake
+myForum.guildID // The guild ID that the forum is in - Snowflake
 myForum.Title // The user specified title of the forum - String
 myForum.Description // The user specified description of the forum - String
 myForum.MessagesNumber // The number of messages in the forum - Number
-myForum.forumUsers // All the users in the forum - Array<[Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)>
-myForum.forumMessages // All the messages in the forum - Array<[Message](https://discord.js.org/#/docs/discord.js/stable/class/Message)>
+myForum.forumUsers // All the users in the forum - Array<Snowflake>
+myForum.forumMessages // All the messages in the forum - Array<Message>
 ```
 
 ### **deleteForum**
@@ -111,16 +111,54 @@ Promise<Object>
 ```js
 const myForum = Forums.deleteForum(...);
 
-myForum.userID // The ID of the user that owns this forum - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
-myForum.messageID // The message ID that the thread(forum) is linked to - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
-myForum.threadID // The thread ID that the forum is in - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
-myForum.channelID // The channel ID that the forum is in - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
-myForum.guildID // The guild ID that the forum is in - [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
+myForum.userID // The ID of the user that owns this forum - Snowflake
+myForum.messageID // The message ID that the thread(forum) is linked to - Snowflake
+myForum.threadID // The thread ID that the forum is in - Snowflake
+myForum.channelID // The channel ID that the forum is in - Snowflake
+myForum.guildID // The guild ID that the forum is in - Snowflake
 myForum.Title // The user specified title of the forum - String
 myForum.Description // The user specified description of the forum - String
 myForum.MessagesNumber // The number of messages in the forum - Number
-myForum.forumUsers // All the users in the forum - Array<[Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)>
-myForum.forumMessages // All the messages in the forum - Array<[Message](https://discord.js.org/#/docs/discord.js/stable/class/Message)>
+myForum.forumUsers // All the users in the forum - Array<Snowflake>
+myForum.forumMessages // All the messages in the forum - Array<Message>
 ```
+
+### **getForum**
+
+delets a forum, if it exists.
+
+```js
+Forums.getForum(<UserID - String>, <ThreadID - String> );
+```
+
+- Output:
+
+```
+Promise<Object>
+```
+
+#### **getForum properties**
+
+```js
+const myForum = Forums.getForum(...);
+
+myForum.userID // The ID of the user that owns this forum - Snowflake
+myForum.messageID // The message ID that the thread(forum) is linked to - Snowflake
+myForum.threadID // The thread ID that the forum is in - Snowflake
+myForum.channelID // The channel ID that the forum is in - Snowflake
+myForum.guildID // The guild ID that the forum is in - Snowflake
+myForum.Title // The user specified title of the forum - String
+myForum.Description // The user specified description of the forum - String
+myForum.MessagesNumber // The number of messages in the forum - Number
+myForum.forumUsers // All the users in the forum - Array<Snowflake>
+myForum.forumMessages // All the messages in the forum - Array<Message>
+```
+
+## Types
+
+- [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
+- [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)
+- [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
+- [Message](https://discord.js.org/#/docs/discord.js/stable/class/Message)
 
 Have fun and happy discussions! Made with ❤ by Abdelrahman.

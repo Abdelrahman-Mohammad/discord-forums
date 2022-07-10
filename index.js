@@ -1,7 +1,6 @@
 const Discord = require("discord.js");
 const mongoose = require("mongoose");
 const forums = require("./models/forums.js");
-const wait = require("node:timers/promises").setTimeout;
 let mongoUrl;
 
 class DiscordForums {
@@ -104,16 +103,32 @@ class DiscordForums {
     if (!isForum) return false;
 
     if (threadId) {
-      client.channels.cache.filter((channel) => channel.threads.cache.filter((thread) => thread.id === threadId) === threadId).delete();
-      client.channels.cache.filter((channel) => channel.messages.cache.thread.id === threadId).delete();
       forums.findOneAndDelete({ threadID: threadId }).catch((e) => console.log(`Failed to delete document: ${e}`));
     } else {
-      client.channels.cache.filter((channel) => channel.threads.cache.filter((thread) => thread.ownerId === userId) === userId).delete();
-      client.channels.cache.filter((channel) => channel.messages.cache.thread.ownerId === userId).delete();
       forums.findOneAndDelete({ userID: userId }).catch((e) => console.log(`Failed to delete document: ${e}`));
     }
 
     return isForum;
+  }
+
+  /**
+   *
+   * @param {string} [userId] - Discord user ID
+   * @param {string} [threadId] - Discord thread ID
+   * @returns
+   */
+
+  static async getForum(userId, threadId) {
+    let myForum;
+    if (threadId) {
+      myForum = await forums.findOne({ threadID: threadId });
+    } else {
+      myForum = await forums.findOne({ userID: userId });
+    }
+
+    if (!myForum) return false;
+
+    return myForum;
   }
 }
 
