@@ -61,7 +61,7 @@ _Examples can be found in [/test](https://github.com/Abdelrahman-Mohammad/discor
 
 ### **createForum**
 
-Create a new forum.
+Creates a new forum.
 
 ```js
 Forums.createForum(<Client - Discord.Client>, <Interaction - Discord.Interaction>, <ForumHeader - String | "New Forum">, <ForumTitleLabel - String | "Title">, <ForumDescriptionLabel - String | "Description">);
@@ -92,7 +92,7 @@ myForum.forumMessages // All the messages in the forum - Array<Message>
 
 ### **deleteForum**
 
-delets a forum, if it exists.
+Deletes a forum, if it exists.
 
 ```js
 Forums.deleteForum(<Client - Discord.Client>, <UserID - String>, <ThreadID - String>);
@@ -125,11 +125,13 @@ myForum.forumMessages // All the messages in the forum - Array<Message>
 
 ### **getForum**
 
-delets a forum, if it exists.
+Gets a forum, if it exists.
 
 ```js
 Forums.getForum(<UserID - String>, <ThreadID - String> );
 ```
+
+_note: You can only provide one of UserID or ThreadID and it would still work._
 
 - Output:
 
