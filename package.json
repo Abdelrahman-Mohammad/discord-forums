@@ -4,8 +4,7 @@
   "description": "discord-forums is a lightweight, powerfull npm package that lets you make a forums channel for your server where members can discuss questions and ideas.",
   "main": "index.js",
   "dependencies": {
-    "discord.js": "^13.8.1",
-    "mongoose": "^6.4.3"
+    "discord.js": "^14.4.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

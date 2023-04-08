@@ -2,165 +2,118 @@
 <p align="center"><img src="https://img.shields.io/npm/v/discord-forums"> <img src="https://img.shields.io/github/repo-size/Abdelrahman-Mohammad/discord-forums"> <img src="https://img.shields.io/npm/l/discord-forums"> <img src="https://img.shields.io/github/contributors/Abdelrahman-Mohammad/discord-forums"> <img src="https://img.shields.io/github/package-json/dependency-version/Abdelrahman-Mohammad/discord-forums/mongoose">
   <a href="https://discord.gg/rk7cVyk"><img src="https://discordapp.com/api/guilds/753938142246994031/widget.png" alt="Discord server"/></a></p>
 
-# discord-forums
+# **discord-forums**
 
 ![discord-forums picture](https://i.ibb.co/DbV86bj/discord-forums.jpg)
 
-**DISCLAIMER:** This is not an official package from Discord.
+**Notice:**
+
+- This is not an official package from Discord.
+- This package is built with Discord.js v14.9.0
 
 - discord-forums is a lightweight, powerfull npm package that lets you make a forums channel for your server where members can discuss questions and ideas.
-- If you need help feel free to join our <a href="https://discord.gg/hnzXhDh">discord server</a> to talk and help you with your code.
+- If you need help feel free to join our <a href="https://discord.gg/hnzXhDh">discord server</a> to talk and get help.
 - If you encounter any of issues fell free to open an issue in our <a href="https://github.com/Abdelrahman-Mohammad/discord-forums/issues">github repository</a>.
 
-# 📁 | Download & Update
+## **📁 | Download ⬇ & Update ⬆**
 
-You can download it from npm:
+You can download the package from npm:
 
 ```cli
 npm install discord-forums
 ```
 
-You can update to a newer version to receive updates using npm.
+You can update to a newer version to receive updates using npm:
 
 ```cli
 npm update discord-forums
 ```
 
-# ⚙ | Changelog
+---
 
-- **8 July 2022** (v1.2.0) - Added **createForum** and **deleteForum** methods.
-- **8 July 2022** (v1.1.0) - Grand Launch.
+## **📰 | Changelog**
 
-# ✍ | Quick Example
+- **8 April, 2023** (v2.0.0) - Removed all previous methods. Added **setupForums**, **createPost**, and **deletePost**.
+- **8 April, 2023** (v2.0.0) - Switched to Discord's ForumChannel.
+- **8 July, 2022** (v1.2.0) - Added **createForum** and **deleteForum** methods.
+- **8 July, 2022** (v1.0.0) - Grand Launch.
 
-```js
-const Forums = require("discord-forums");
-Forums.connectionURL("mongodb://..."); // First, we connect to the database.
-const myForum = Forums.createForum(client, interaction, "Issues Forum", "Issue Title", "Issue Description"); // Then, we create our forum.
-```
+---
 
-# 📜 | Setting Up
-
-First things first, we include the module into the project.
+## **✍ | Quick Example**
 
 ```js
-const Forums = require("discord-forums");
+// Import the package to access it's methods.
+require("discord-forums");
+
+// Create the Forums channel.
+const myForums = setupForums(guild, "355897081333940227", "My Forums", [...]);
+
+// Create a new post in your forums channel.
+createPost(myForums, "My Post", "This is my first post!");
 ```
 
-Then, we connect to our MongoDB database.
+---
+
+## **⚡ | Setting Up**
+
+First things first, download the package.
+
+```cli
+npm install discord-forums@latest
+```
+
+then, include the module into your project.
 
 ```js
-Forums.connectionURL("mongodb://...");
+require("discord-forums");
 ```
 
-# 📝 | Examples
+---
 
-_Examples can be found in [/test](https://github.com/Abdelrahman-Mohammad/discord-forums/tree/main/test#discord-forums)_
+## **🔧 | Methods**
 
-# Methods
+### **setupForums** - Creates a new forums channel.
 
-### **createForum**
+> ```js
+> setupForums(guild<Discord.Guild>, parent<Discord.CategoryChannelResolvable|Discord.Snowflake>, channelName<String>, permissions<Array<Discord.OverwriteResolvable>>);
+> ```
+>
+> Returns: `ForumChannel<Discord.ForumChannel>`
 
-Creates a new forum.
+### **createPost** - Creates a new post in a specific forum channel.
 
-```js
-Forums.createForum(<Client - Discord.Client>, <Interaction - Discord.Interaction>, <ForumHeader - String | "New Forum">, <ForumTitleLabel - String | "Title">, <ForumDescriptionLabel - String | "Description">);
-```
+> ```js
+> createPost(forumChannel<Discord.ForumChannel>, postName<String>, postDescription<String>);
+> ```
+>
+> Returns: `ThreadChannel<Discord.ThreadChannel>`
 
-- Output:
+### **deletePost** - Deletes a forum post in a specific guild.
 
-```
-Promise<Object>
-```
+> ```js
+> deletePost(guild<Discord.Guild>, forumId<Discord.Snowflake>, reason<String>);
+> ```
+>
+> Returns: `void`
 
-#### **createForum properties**
+---
 
-```js
-const myForum = Forums.createForum(...);
+## 📝 | Examples
 
-myForum.userID // The ID of the user that owns this forum - Snowflake
-myForum.messageID // The message ID that the thread(forum) is linked to - Snowflake
-myForum.threadID // The thread ID that the forum is in - Snowflake
-myForum.channelID // The channel ID that the forum is in - Snowflake
-myForum.guildID // The guild ID that the forum is in - Snowflake
-myForum.Title // The user specified title of the forum - String
-myForum.Description // The user specified description of the forum - String
-myForum.MessagesNumber // The number of messages in the forum - Number
-myForum.forumUsers // All the users in the forum - Array<Snowflake>
-myForum.forumMessages // All the messages in the forum - Array<Message>
-```
+_Examples can be found in [/examples](https://github.com/Abdelrahman-Mohammad/discord-forums/tree/main/examples#discord-forums)_
 
-### **deleteForum**
-
-Deletes a forum, if it exists.
-
-```js
-Forums.deleteForum(<Client - Discord.Client>, <UserID - String>, <ThreadID - String>);
-```
-
-_note: You can only provide one of UserID or ThreadID and it would still work._
-
-- Output:
-
-```
-Promise<Object>
-```
-
-#### **deleteForum properties**
-
-```js
-const myForum = Forums.deleteForum(...);
-
-myForum.userID // The ID of the user that owns this forum - Snowflake
-myForum.messageID // The message ID that the thread(forum) is linked to - Snowflake
-myForum.threadID // The thread ID that the forum is in - Snowflake
-myForum.channelID // The channel ID that the forum is in - Snowflake
-myForum.guildID // The guild ID that the forum is in - Snowflake
-myForum.Title // The user specified title of the forum - String
-myForum.Description // The user specified description of the forum - String
-myForum.MessagesNumber // The number of messages in the forum - Number
-myForum.forumUsers // All the users in the forum - Array<Snowflake>
-myForum.forumMessages // All the messages in the forum - Array<Message>
-```
-
-### **getForum**
-
-Gets a forum, if it exists.
-
-```js
-Forums.getForum(<UserID - String>, <ThreadID - String> );
-```
-
-_note: You can only provide one of UserID or ThreadID and it would still work._
-
-- Output:
-
-```
-Promise<Object>
-```
-
-#### **getForum properties**
-
-```js
-const myForum = Forums.getForum(...);
-
-myForum.userID // The ID of the user that owns this forum - Snowflake
-myForum.messageID // The message ID that the thread(forum) is linked to - Snowflake
-myForum.threadID // The thread ID that the forum is in - Snowflake
-myForum.channelID // The channel ID that the forum is in - Snowflake
-myForum.guildID // The guild ID that the forum is in - Snowflake
-myForum.Title // The user specified title of the forum - String
-myForum.Description // The user specified description of the forum - String
-myForum.MessagesNumber // The number of messages in the forum - Number
-myForum.forumUsers // All the users in the forum - Array<Snowflake>
-myForum.forumMessages // All the messages in the forum - Array<Message>
-```
+---
 
 ## Types
 
-- [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
-- [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)
-- [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
-- [Message](https://discord.js.org/#/docs/discord.js/stable/class/Message)
+[1]: https://discord.js.org/#/docs/discord.js/14.9.0/class/ForumChannel
+
+- [ForumChannel](https://discord.js.org/#/docs/discord.js/14.9.0/class/ForumChannel)
+- [ThreadChannel](https://discord.js.org/#/docs/discord.js/14.9.0/class/ThreadChannel)
+- [Snowflake](https://discord.js.org/#/docs/discord.js/14.9.0/typedef/Snowflake)
+- [Guild](https://discord.js.org/#/docs/discord.js/14.9.0/class/Guild)
+- [CategoryChannel](https://discord.js.org/#/docs/discord.js/14.9.0/class/CategoryChannel)
+- [OverwriteResolvable](https://discord.js.org/#/docs/discord.js/14.9.0/typedef/OverwriteResolvable)
 
 Have fun and happy discussions! Made with ❤ by Abdelrahman.
