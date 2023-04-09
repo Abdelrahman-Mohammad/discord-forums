@@ -7,7 +7,7 @@ class DiscordForums {
    * @param {(Discord.CategoryChannelResolvable|Discord.Snowflake)} parent - Discord {@link https://discord.js.org/#/docs/discord.js/14.9.0/class/CategoryChannel CategoryChannel} or CategoryChannel's {@link https://discord.js.org/#/docs/discord.js/14.9.0/typedef/Snowflake Snowflake}.
    * @param {String} [channelName] - Discord forum's channel name.
    * @param {Array<Discord.OverwriteResolvable>} [permissions] - Array of objects of {@link https://discord.js.org/#/docs/discord.js/14.9.0/typedef/OverwriteData permissions}
-   * @returns {Discord.ForumChannel} Discord {@link https://discord.js.org/#/docs/discord.js/14.9.0/class/ForumChannel ForumChannel}.
+   * @returns {Promise<Discord.ForumChannel>} Discord {@link https://discord.js.org/#/docs/discord.js/14.9.0/class/ForumChannel ForumChannel}.
    */
 
   static async setupForums(
@@ -19,15 +19,13 @@ class DiscordForums {
     if (!guild) return new TypeError("No Guild instance was provided.");
     if (!parent) return new TypeError("No Category Channel was provided.");
 
-    guild.channels
+    return guild.channels
       .create(parent, {
         name: channelName,
         type: ChannelType.GuildForum,
         permissionOverwrites: permissions,
       })
-      .then((forumChannel) => {
-        return forumChannel;
-      })
+      .then((forumChannel) => forumChannel)
       .catch(console.error);
   }
 
@@ -36,7 +34,7 @@ class DiscordForums {
    * @param {Discord.ForumChannel} forumChannel - Discord {@link https://discord.js.org/#/docs/discord.js/14.9.0/class/ForumChannel ForumChannel}.
    * @param {String} postName - Post's name.
    * @param {String} postDescription - Post's description.
-   * @returns {Discord.ThreadChannel} Discord {@link https://discord.js.org/#/docs/discord.js/14.9.0/class/ThreadChannel ThreadChannel}.
+   * @returns {Promise<Discord.ThreadChannel>} Discord {@link https://discord.js.org/#/docs/discord.js/14.9.0/class/ThreadChannel ThreadChannel}.
    */
 
   static async createPost(forumChannel, postName, postDescription) {
@@ -45,16 +43,14 @@ class DiscordForums {
     if (!postDescription)
       return new TypeError("No post description was provided");
 
-    forumChannel.threads
+    return forumChannel.threads
       .create({
         name: postName,
         message: {
           content: postDescription,
         },
       })
-      .then((threadChannel) => {
-        return threadChannel;
-      })
+      .then((threadChannel) => threadChannel)
       .catch(console.error);
   }
 
@@ -63,14 +59,19 @@ class DiscordForums {
    * @param {Discord.Guild} guild - Discord {@link https://discord.js.org/#/docs/discord.js/14.9.0/class/Guild Guild}.
    * @param {Discord.Snowflake} postId - Discord ThreadChannel's {@link https://discord.js.org/#/docs/discord.js/14.9.0/typedef/Snowflake Snowflake}
    * @param {String} [reason] - Reason for deletion.
-   * @returns {void}
+   * @returns {Promise<Discord.ThreadChannel>} Discord {@link https://discord.js.org/#/docs/discord.js/14.9.0/class/ThreadChannel ThreadChannel}.
    */
 
   static async deletePost(guild, postId, reason) {
     if (!guild) return new TypeError("No Guild instance was provided.");
-    guild.channels
+    return guild.channels
       .fetch(postId)
-      .then((channel) => channel.delete(reason))
+      .then((channel) =>
+        channel
+          .delete(reason)
+          .then((deletedThread) => deletedThread)
+          .catch(console.error)
+      )
       .catch(console.error);
   }
 }

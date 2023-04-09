@@ -78,26 +78,26 @@ require("discord-forums");
 ### **setupForums** - Creates a new forums channel.
 
 > ```js
-> setupForums(guild<Discord.Guild>, parent<Discord.CategoryChannelResolvable|Discord.Snowflake>, channelName<String>, permissions<Array<Discord.OverwriteResolvable>>);
+> setupForums(<Discord.Guild>, <Discord.CategoryChannelResolvable|Discord.Snowflake>, <String>, <Array<Discord.OverwriteResolvable>>);
 > ```
 >
-> Returns: `ForumChannel<Discord.ForumChannel>`
+> Returns: `Promise<Discord.ForumChannel>`
 
 ### **createPost** - Creates a new post in a specific forum channel.
 
 > ```js
-> createPost(forumChannel<Discord.ForumChannel>, postName<String>, postDescription<String>);
+> createPost(<Discord.ForumChannel>, <String>, <String>);
 > ```
 >
-> Returns: `ThreadChannel<Discord.ThreadChannel>`
+> Returns: `Promise<Discord.ThreadChannel>`
 
 ### **deletePost** - Deletes a forum post in a specific guild.
 
 > ```js
-> deletePost(guild<Discord.Guild>, forumId<Discord.Snowflake>, reason<String>);
+> deletePost(<Discord.Guild>, <Discord.Snowflake>, <String>);
 > ```
 >
-> Returns: `void`
+> Returns: `Promise<Discord.ThreadChannel>`
 
 ---
 
