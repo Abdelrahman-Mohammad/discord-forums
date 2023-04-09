@@ -2,20 +2,21 @@
 <p align="center"><img src="https://img.shields.io/npm/v/discord-forums"> <img src="https://img.shields.io/github/repo-size/Abdelrahman-Mohammad/discord-forums"> <img src="https://img.shields.io/npm/l/discord-forums"> <img src="https://img.shields.io/github/contributors/Abdelrahman-Mohammad/discord-forums"> <img src="https://img.shields.io/github/package-json/dependency-version/Abdelrahman-Mohammad/discord-forums/mongoose">
   <a href="https://discord.gg/rk7cVyk"><img src="https://discordapp.com/api/guilds/753938142246994031/widget.png" alt="Discord server"/></a></p>
 
-# **discord-forums**
+# **discord-forums** 💬
 
 ![discord-forums picture](https://i.ibb.co/DbV86bj/discord-forums.jpg)
 
+discord-forums is a lightweight, powerfull npm package that lets you make a forums channel for your server where members can discuss questions and ideas.
+
 **Notice:**
 
-- This is not an official package from Discord.
-- This package is built with Discord.js v14.9.0
-
-- discord-forums is a lightweight, powerfull npm package that lets you make a forums channel for your server where members can discuss questions and ideas.
+- This package is built with Discord.js v14.9.0 _(not tested on v13)_
 - If you need help feel free to join our <a href="https://discord.gg/hnzXhDh">discord server</a> to talk and get help.
 - If you encounter any of issues fell free to open an issue in our <a href="https://github.com/Abdelrahman-Mohammad/discord-forums/issues">github repository</a>.
 
-## **📁 | Download ⬇ & Update ⬆**
+---
+
+## **📁 | Download & Update**
 
 You can download the package from npm:
 
@@ -33,6 +34,7 @@ npm update discord-forums
 
 ## **📰 | Changelog**
 
+- **9 April, 2023** (v2.0.1) - Added Exampes in [/examples](https://github.com/Abdelrahman-Mohammad/discord-forums/tree/main/examples)
 - **8 April, 2023** (v2.0.0) - Removed all previous methods. Added **setupForums**, **createPost**, and **deletePost**.
 - **8 April, 2023** (v2.0.0) - Switched to Discord's ForumChannel.
 - **8 July, 2022** (v1.2.0) - Added **createForum** and **deleteForum** methods.
@@ -101,13 +103,11 @@ require("discord-forums");
 
 ## 📝 | Examples
 
-_Examples can be found in [/examples](https://github.com/Abdelrahman-Mohammad/discord-forums/tree/main/examples#discord-forums)_
+_Examples can be found in [/examples](https://github.com/Abdelrahman-Mohammad/discord-forums/tree/main/examples)_
 
 ---
 
 ## Types
-
-[1]: https://discord.js.org/#/docs/discord.js/14.9.0/class/ForumChannel
 
 - [ForumChannel](https://discord.js.org/#/docs/discord.js/14.9.0/class/ForumChannel)
 - [ThreadChannel](https://discord.js.org/#/docs/discord.js/14.9.0/class/ThreadChannel)

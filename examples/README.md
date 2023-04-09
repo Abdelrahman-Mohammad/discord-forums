@@ -2,216 +2,157 @@
 <p align="center"><img src="https://img.shields.io/npm/v/discord-forums"> <img src="https://img.shields.io/github/repo-size/Abdelrahman-Mohammad/discord-forums"> <img src="https://img.shields.io/npm/l/discord-forums"> <img src="https://img.shields.io/github/contributors/Abdelrahman-Mohammad/discord-forums"> <img src="https://img.shields.io/github/package-json/dependency-version/Abdelrahman-Mohammad/discord-forums/mongoose">
   <a href="https://discord.gg/rk7cVyk"><img src="https://discordapp.com/api/guilds/753938142246994031/widget.png" alt="Discord server"/></a></p>
 
-# discord-forums
+# **discord-forums** 💬
 
 ![discord-forums picture](https://i.ibb.co/DbV86bj/discord-forums.jpg)
 
-# Documentation
+## **📄 | Documentation**
 
 You can find the full documentation [here]().
 
-# Download
+---
+
+## **📁 | Download & Update**
 
 You can download it from npm:
 
 ```cli
-npm install discord-forums
+npm install discord-forums@latest
 ```
 
-# Setting Up
+```cli
+npm update discord-forums
+```
 
-First things first, we include the module into the project.
+---
+
+## **🔧 | Setting Up**
+
+First things first, include the module into your file.
 
 ```js
-const Forums = require("discord-forums");
+require("discord-forums");
 ```
 
-Then, we connect to our MongoDB database.
+---
 
-```js
-Forums.connectionURL("mongodb://...");
-```
+## **🧪 | Examples**
 
-# Examples
-
-Check [properties](https://github.com/Abdelrahman-Mohammad/discord-forums/tree/main/test#properties) for all the properties of your forum.
 _Note: in the examples we will be using a [command handler](https://discordjs.guide/creating-your-bot/command-handling.html)._
 
-## Making a forum command
-
 - Dependencies you need:
   - discord-forums
-  - discord.js
   - @discordjs/builders
-  - mongoose
 
 ```js
-// First, we require our dependencies.
-const Discord = require("discord.js");
+// First, make sure to import the dependencies in each file.
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const Forums = require("discord-forums");
-const mongoose = require("mongoose");
+require("discord-forums");
+```
 
+### **setup-forums Command**
+
+```js
 module.exports = {
-  data: new SlashCommandBuilder().setName("forum").setDescription("Creates a new forum"),
+  data: new SlashCommandBuilder()
+    .setName("setup-forums")
+    .setDescription("Creates a new forum channel")
+    .addStringOption((option) => {
+      option
+        .setName("forum-name")
+        .setDescription("The name of your forums channel.");
+    }),
   async execute(interaction) {
-    // We define our client.
-    const client = interaction.client;
+    // Variables we need:
+    const guild = interaction.guild;
+    const parentCategoryId = "355897081333940227";
+    const name = interaction.options.getString("forum-name");
+    const permissions = [
+      {
+        id: "547905866255433758",
+        allow: [
+          PermissionFlagsBits.ViewChannel,
+          PermissionFlagsBits.SendMessages,
+        ],
+        deny: [
+          PermissionFlagsBits.ManageMessages,
+          PermissionsFlagsBits.AttachFiles,
+        ],
+      },
+    ];
 
-    // Then, we connect to our database.
-    await Forums.connectionURL("mongodb://...");
-
-    // After that we call the .createForum() method to create our forum.
-    // We pass in our client as the first parameter and interaction as our seccond.
-    // We will also put it in a variable to use it later.
-    const myForum = await Forums.createForum(client, interaction);
+    // Call the `setupForums` method to create our forum channel.
+    const myForum = await setupForums(
+      guild,
+      parentCategoryId,
+      name,
+      permissions
+    );
     console.log(myForum);
-
-    // Then, we make sure that the user doesn't have a forum already open
-    if (myForum === false) {
-      return interaction.reply("You already have a forum open");
-    }
-
-    // Here we will be sending a log message to the moderation channel
-    const moderationChannel = await client.channels.cache.get("862503484418687028");
-
-    // Next, let's create an embed with all the Forums information to send
-    const embed = new Discord.MessageEmbed()
-      .setColor("GREEN")
-      .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() })
-      .setTitle("New Forum Created")
-      .setDescription(`\`A new forum has been created.\`\n\n> Creator: ${interaction.member}\n> Forum ID: ${myForum.threadID}\n> Forum Title: ${myForum.Title}\n> Forum Description: ${myForum.Description}`);
-
-    // Lastly, we send the embed to the moderation channel.
-    await moderationChannel.send({ embeds: [embed] });
   },
 };
 ```
 
-Congrats 🥳! You made your first forum.
+Congrats 🥳! You made your first forum channel. Let's create a post.
 
-## Making a forum deletion command
-
-- Dependencies you need:
-  - discord-forums
-  - discord.js
-  - @discordjs/builders
-  - mongoose
+### **create-post Command**
 
 ```js
-// First, we require our dependencies.
-const Discord = require("discord.js");
-const { SlashCommandBuilder } = require("@discordjs/builders");
-const Forums = require("discord-forums");
-const mongoose = require("mongoose");
-
 module.exports = {
-  data: new SlashCommandBuilder().setName("deleteforum").setDescription("Deletes a forum"),
+  data: new SlashCommandBuilder()
+    .setName("create-post")
+    .setDescription("Creates a new post in the forums channel")
+    .addStringOption((option) => {
+      option.setName("post-name").setDescription("The name of your post.");
+    })
+    .addStringOption((option) => {
+      option
+        .setName("post-message")
+        .setDescription("The message of your post.");
+    }),
   async execute(interaction) {
-    // We define our client and our other variables.
-    const client = interaction.client;
-    const userId = interaction.user.id;
-    const threadId = "994922705449136139";
+    // Variables we need:
+    const forumChannel = interaction.guild.channels.fetch("1006698887605653");
+    const name = interaction.options.getString("post-name");
+    const message = interaction.options.getString("post-message");
 
-    // Then, we connect to our database.
-    await Forums.connectionURL("mongodb://...");
-
-    // After that we call the .deleteForum() method to delete our forum.
-    // We pass in our client as the first parameter and either user id or thread id as our seccond, I chose user id for this one.
-    // We will also put it in a variable to use it later.
-    const myDeletedForum = await Forums.deleteForum(client, userId);
-
-    // Then, we make sure that the forum exist
-    if (myDeletedForum === false) {
-      return interaction.reply("I couldn't find any forums");
-    }
-
-    // Here we will be sending a log message to the moderation channel
-    const moderationChannel = client.channels.cache.get("753938142246994033");
-
-    // Next, let's create an embed with all the Forums information to send
-    const embed = new Discord.MessageEmbed()
-      .setColor("RED")
-      .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() })
-      .setTitle("A Forum Was Deleted")
-      .setDescription(`\`A forum has been deleted.\`\n\n> Creator: ${interaction.member}\n> Forum ID: ${myDeletedForum.threadID}\n> Forum Title: ${myDeletedForum.Title}\n> Forum Description: ${myDeletedForum.Description}`);
-
-    // Lastly, we send the embed to the moderation channel.
-    await moderationChannel.send({ embeds: [embed] });
+    // Call the `createPost` method to create our post.
+    const myPost = await createPost(forumChannel, name, message);
+    console.log(myPost);
   },
 };
 ```
 
-## Making a get forum command
-
-- Dependencies you need:
-  - discord-forums
-  - discord.js
-  - @discordjs/builders
-  - mongoose
+### **delete-post Command**
 
 ```js
-// First, we require our dependencies.
-const Discord = require("discord.js");
-const { SlashCommandBuilder } = require("@discordjs/builders");
-const Forums = require("discord-forums");
-const mongoose = require("mongoose");
-
 module.exports = {
-  data: new SlashCommandBuilder().setName("getforum").setDescription("gets a forum"),
+  data: new SlashCommandBuilder()
+    .setName("delete-post")
+    .setDescription("Deletes a post in the forums channel")
+    .addStringOption((option) => {
+      option.setName("post-id").setDescription("The id of your post.");
+    }),
   async execute(interaction) {
-    // We define our client and variables.
-    const client = interaction.client;
-    const userId = interaction.user.id;
-    const threadId = "994922705449136139";
+    // Variables we need:
+    const guild = interaction.guild;
+    const postId = interaction.options.getString("post-id");
 
-    // Then, we connect to our database.
-    await Forums.connectionURL("mongodb://...");
-
-    // After that we call the .getForum() method to get our forum.
-    // We pass in our userId as the first parameter and thread id as our seccond, either userId or threadId will work.
-    // We will also put it in a variable to use it later.
-    const myForum = await Forums.getForum(userId, threadId);
-
-    // Then, we make sure that the forum exist
-    if (myForum === false) {
-      return interaction.reply("I couldn't find any forums");
-    }
-
-    // To reply with the forum, we first make an embed with the forum's information
-    const embed = new Discord.MessageEmbed()
-      .setColor("GREEN")
-      .setTitle(`${myForum.Title}`)
-      .setDescription(`> Creator: <@${myForum.userID}>\n> Forum Message ID: ${myForum.messageID}\n> Forum Thread ID: ${myForum.threadID}\n> Forum Channel: <#${myForum.channelID}>\n> Forum Guild ID: ${myForum.guildID}\n> Forum Title: ${myForum.Title}\n> Forum Description: ${myForum.Description}\n> Forum Message Number: ${myForum.MessagesNumber}`);
-
-    // Then we send the embed
-    await interaction.reply({ embeds: [embed] });
+    // Call the `deletePost` method to delete our post.
+    await deletePost(guild, postId, "I don't need that post anymore.");
   },
 };
 ```
 
-## Properties
+---
 
-```js
-const myForum = Forums.deleteForum(...);
+## Types
 
-myForum.userID // The ID of the user that owns this forum - Snowflake
-myForum.messageID // The message ID that the thread(forum) is linked to - Snowflake
-myForum.threadID // The thread ID that the forum is in - Snowflake
-myForum.channelID // The channel ID that the forum is in - Snowflake
-myForum.guildID // The guild ID that the forum is in - Snowflake
-myForum.Title // The user specified title of the forum - String
-myForum.Description // The user specified description of the forum - String
-myForum.MessagesNumber // The number of messages in the forum - Number
-myForum.forumUsers // All the users in the forum - Array<Snowflake>
-myForum.forumMessages // All the messages in the forum - Array<Message>
-```
-
-### Types
-
-- [Snowflake](https://discord.js.org/#/docs/discord.js/stable/typedef/Snowflake)
-- [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)
-- [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
-- [Message](https://discord.js.org/#/docs/discord.js/stable/class/Message)
+- [ForumChannel](https://discord.js.org/#/docs/discord.js/14.9.0/class/ForumChannel)
+- [ThreadChannel](https://discord.js.org/#/docs/discord.js/14.9.0/class/ThreadChannel)
+- [Snowflake](https://discord.js.org/#/docs/discord.js/14.9.0/typedef/Snowflake)
+- [Guild](https://discord.js.org/#/docs/discord.js/14.9.0/class/Guild)
+- [CategoryChannel](https://discord.js.org/#/docs/discord.js/14.9.0/class/CategoryChannel)
+- [OverwriteResolvable](https://discord.js.org/#/docs/discord.js/14.9.0/typedef/OverwriteResolvable)
 
 Have fun and happy discussions! Made with ❤ by Abdelrahman.

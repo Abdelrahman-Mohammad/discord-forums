@@ -4,7 +4,7 @@ class DiscordForums {
   /**
    *  Sets up and creates a Forums channel for your posts.
    * @param {Discord.Guild} guild - Discord {@link https://discord.js.org/#/docs/discord.js/14.9.0/class/Guild Guild}.
-   * @param {(Discord.CategoryChannelResolvable|Discord.Snowflake)} [parent] - Discord {@link https://discord.js.org/#/docs/discord.js/14.9.0/class/CategoryChannel CategoryChannel} or CategoryChannel's {@link https://discord.js.org/#/docs/discord.js/14.9.0/typedef/Snowflake Snowflake}.
+   * @param {(Discord.CategoryChannelResolvable|Discord.Snowflake)} parent - Discord {@link https://discord.js.org/#/docs/discord.js/14.9.0/class/CategoryChannel CategoryChannel} or CategoryChannel's {@link https://discord.js.org/#/docs/discord.js/14.9.0/typedef/Snowflake Snowflake}.
    * @param {String} [channelName] - Discord forum's channel name.
    * @param {Array<Discord.OverwriteResolvable>} [permissions] - Array of objects of {@link https://discord.js.org/#/docs/discord.js/14.9.0/typedef/OverwriteData permissions}
    * @returns {Discord.ForumChannel} Discord {@link https://discord.js.org/#/docs/discord.js/14.9.0/class/ForumChannel ForumChannel}.
@@ -12,11 +12,12 @@ class DiscordForums {
 
   static async setupForums(
     guild,
-    parent = null,
+    parent,
     channelName = "My Forums",
     permissions = null
   ) {
     if (!guild) return new TypeError("No Guild instance was provided.");
+    if (!parent) return new TypeError("No Category Channel was provided.");
 
     guild.channels
       .create(parent, {
@@ -60,15 +61,15 @@ class DiscordForums {
   /**
    *  Deletes a post in a specific forum channel.
    * @param {Discord.Guild} guild - Discord {@link https://discord.js.org/#/docs/discord.js/14.9.0/class/Guild Guild}.
-   * @param {Discord.Snowflake} forumId - Discord ThreadChannel's {@link https://discord.js.org/#/docs/discord.js/14.9.0/typedef/Snowflake Snowflake}
+   * @param {Discord.Snowflake} postId - Discord ThreadChannel's {@link https://discord.js.org/#/docs/discord.js/14.9.0/typedef/Snowflake Snowflake}
    * @param {String} [reason] - Reason for deletion.
    * @returns {void}
    */
 
-  static async deletePost(guild, forumId, reason) {
+  static async deletePost(guild, postId, reason) {
     if (!guild) return new TypeError("No Guild instance was provided.");
     guild.channels
-      .fetch(forumId)
+      .fetch(postId)
       .then((channel) => channel.delete(reason))
       .catch(console.error);
   }
