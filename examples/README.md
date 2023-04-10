@@ -2,13 +2,11 @@
 <p align="center"><img src="https://img.shields.io/npm/v/discord-forums"> <img src="https://img.shields.io/github/repo-size/Abdelrahman-Mohammad/discord-forums"> <img src="https://img.shields.io/npm/l/discord-forums"> <img src="https://img.shields.io/github/contributors/Abdelrahman-Mohammad/discord-forums"> <img src="https://img.shields.io/github/package-json/dependency-version/Abdelrahman-Mohammad/discord-forums/mongoose">
   <a href="https://discord.gg/rk7cVyk"><img src="https://discordapp.com/api/guilds/753938142246994031/widget.png" alt="Discord server"/></a></p>
 
-# **discord-forums** 💬
-
-![discord-forums picture](https://i.ibb.co/DbV86bj/discord-forums.jpg)
+# **discord-forums/examples**
 
 ## **📄 | Documentation**
 
-You can find the full documentation [here]().
+You can find the full documentation [here](https://github.com/Abdelrahman-Mohammad/discord-forums/).
 
 ---
 
@@ -50,7 +48,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 require("discord-forums");
 ```
 
-### **setup-forums Command**
+### **`setup-forums` Command**
 
 ```js
 module.exports = {
@@ -95,7 +93,7 @@ module.exports = {
 
 Congrats 🥳! You made your first forum channel. Let's create a post.
 
-### **create-post Command**
+### **`create-post` Command**
 
 ```js
 module.exports = {
@@ -123,7 +121,7 @@ module.exports = {
 };
 ```
 
-### **delete-post Command**
+### **`delete-post` Command**
 
 ```js
 module.exports = {
