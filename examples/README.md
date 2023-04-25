@@ -40,12 +40,13 @@ _Note: in the examples we will be using a [command handler](https://discordjs.gu
 
 - Dependencies you need:
   - discord-forums
+  - discord.js@14.9.0
   - @discordjs/builders
 
 ```js
 // First, make sure to import the dependencies in each file.
 const { SlashCommandBuilder } = require("@discordjs/builders");
-require("discord-forums");
+const Forums = require("discord-forums");
 ```
 
 ### **`setup-forums` Command**
@@ -80,7 +81,7 @@ module.exports = {
     ];
 
     // Call the `setupForums` method to create our forum channel.
-    const myForum = await setupForums(
+    const myForum = await Forums.setupForums(
       guild,
       parentCategoryId,
       name,
@@ -115,7 +116,7 @@ module.exports = {
     const message = interaction.options.getString("post-message");
 
     // Call the `createPost` method to create our post.
-    const myPost = await createPost(forumChannel, name, message);
+    const myPost = await Forums.createPost(forumChannel, name, message);
     console.log(myPost);
   },
 };
@@ -137,7 +138,7 @@ module.exports = {
     const postId = interaction.options.getString("post-id");
 
     // Call the `deletePost` method to delete our post.
-    await deletePost(guild, postId, "I don't need that post anymore.");
+    await Forums.deletePost(guild, postId, "I don't need that post anymore.");
   },
 };
 ```

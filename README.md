@@ -46,13 +46,13 @@ npm update discord-forums
 
 ```js
 // Import the package to access it's methods.
-require("discord-forums");
+const Forums = require("discord-forums");
 
 // Create the Forums channel.
-const myForums = setupForums(guild, "355897081333940227", "My Forums", [...]);
+const myForums = Forums.setupForums(guild, "355897081333940227", "My Forums", [...]);
 
 // Create a new post in your forums channel.
-createPost(myForums, "My Post", "This is my first post!");
+Forums.createPost(myForums, "My Post", "This is my first post!");
 ```
 
 ---
@@ -68,7 +68,7 @@ npm install discord-forums@latest
 then, include the module into your project.
 
 ```js
-require("discord-forums");
+const Forums = require("discord-forums");
 ```
 
 ---
@@ -78,7 +78,7 @@ require("discord-forums");
 ### **setupForums** - Creates a new forums channel.
 
 > ```js
-> setupForums(<Discord.Guild>, <Discord.CategoryChannelResolvable|Discord.Snowflake>, <String>, <Array<Discord.OverwriteResolvable>>);
+> Forums.setupForums(<Discord.Guild>, <Discord.CategoryChannelResolvable|Discord.Snowflake>, <String>, <Array<Discord.OverwriteResolvable>>);
 > ```
 >
 > Returns: `Promise<Discord.ForumChannel>`
@@ -86,7 +86,7 @@ require("discord-forums");
 ### **createPost** - Creates a new post in a specific forum channel.
 
 > ```js
-> createPost(<Discord.ForumChannel>, <String>, <String>);
+> Forums.createPost(<Discord.ForumChannel>, <String>, <String>);
 > ```
 >
 > Returns: `Promise<Discord.ThreadChannel>`
@@ -94,7 +94,7 @@ require("discord-forums");
 ### **deletePost** - Deletes a forum post in a specific guild.
 
 > ```js
-> deletePost(<Discord.Guild>, <Discord.Snowflake>, <String>);
+> Forums.deletePost(<Discord.Guild>, <Discord.Snowflake>, <String>);
 > ```
 >
 > Returns: `Promise<Discord.ThreadChannel>`
